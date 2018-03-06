@@ -27,6 +27,8 @@ public class ConnectionProvider {
 			String username = properties.getProperty("username");
 			String password = properties.getProperty("password");
 			conn = (Connection) DriverManager.getConnection(url, username, password); 
+			
+			conn.setAutoCommit(false); //수동으로 커밋하게 바꿈
 		}catch(Exception se) {
 			System.err.println(se.getMessage());
 		}
@@ -40,5 +42,23 @@ public class ConnectionProvider {
 		try {
 			if(conn!=null) {conn.close();}
 		}catch(Exception se) {}
+	}
+	
+	//DB에 적용하기
+	public static void commit() {
+		try {
+			conn.commit();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//중간에 문제발생하여 최근 commit된 지점으로 되돌림
+	public static void rollback() {
+		try {
+			conn.rollback();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

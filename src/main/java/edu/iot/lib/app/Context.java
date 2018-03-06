@@ -14,6 +14,7 @@ public class Context {
 		map.put(key, value);
 	}
 	
+	//현재 사용자에 대한 정보를 얻고자할 때 사용
 	public static Object getAttribute(String key) {
 		return map.get(key);
 	}
